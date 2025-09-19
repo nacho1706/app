@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 	"test-go2/ent"
-	"test-go2/internal/http/handlers"
+	routes "test-go2/internal/http"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -13,6 +13,9 @@ import (
 
 func main() {
 	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		log.Fatal("❌ DATABASE_URL environment variable is required")
+	}
 
 	client, err := ent.Open("mysql", dsn)
 	if err != nil {
@@ -22,13 +25,7 @@ func main() {
 
 	r := gin.Default()
 
-	userHandler := handlers.NewUserHandler(client)
-
-	// api := r.Group("/api")
-	// {
-	// 	api.GET("/users", userHandler.List)
-	// 	api.POST("/users", userHandler.Create)
-	// }
+	routes.SetupRoutes(r, client)
 
 	log.Println("Servidor corriendo en :8080")
 	if err := r.Run(":8080"); err != nil && err != http.ErrServerClosed {
