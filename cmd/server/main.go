@@ -9,22 +9,27 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	dsn := os.Getenv("DATABASE_URL")
-	if dsn == "" {
-		log.Fatal("❌ DATABASE_URL environment variable is required")
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error: .env didnt load correctly")
 	}
 
-	client, err := ent.Open("mysql", dsn)
+	mysqlenv := os.Getenv("DATABASE_URL")
+	if mysqlenv == "" {
+		log.Fatalf("error al conectar la DB")
+	}
+
+	client, err := ent.Open("mysql", mysqlenv)
 	if err != nil {
-		log.Fatalf("❌ error al conectar la DB: %v", err)
+		log.Fatal("Error loading credentials: ", mysqlenv)
 	}
 	defer client.Close()
 
 	r := gin.Default()
-
 	routes.SetupRoutes(r, client)
 
 	log.Println("Servidor corriendo en :8080")

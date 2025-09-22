@@ -22,7 +22,7 @@ func (h *UserHandler) List(c *gin.Context) {
 
 	total, err := h.client.User.Query().Count(c)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to count users"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to count usersss" + err.Error()})
 		return
 	}
 
@@ -32,7 +32,7 @@ func (h *UserHandler) List(c *gin.Context) {
 		Order(ent.Asc("id")).
 		All(c)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users: " + err.Error()})
 		return
 	}
 

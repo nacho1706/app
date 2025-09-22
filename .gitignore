@@ -1,0 +1,60 @@
+# ==========================
+# Go
+# ==========================
+# Archivos de binarios y compilación
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Carpetas de build/cache
+/bin/
+/obj/
+/dist/
+/build/
+/tmp/
+/coverage.out
+
+# Archivos generados por go
+*.a
+*.o
+
+# Módulos (se recomienda versionar solo go.mod y go.sum)
+vendor/
+
+# ==========================
+# Ent
+# ==========================
+# Si querés regenerar el código siempre en CI/CD, ignorá ent/
+# Si preferís versionarlo, comentá la siguiente línea
+# /ent/
+
+# ==========================
+# Atlas
+# ==========================
+# NO ignorar migrations/ ni .atlas.sum
+# /migrations/   <-- se versiona
+# .atlas.sum     <-- se versiona
+
+# ==========================
+# Configuración y secretos
+# ==========================
+.env
+.env.*
+!.env.example
+
+# ==========================
+# IDE / OS
+# ==========================
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db

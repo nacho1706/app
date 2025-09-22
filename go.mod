@@ -5,6 +5,7 @@ go 1.25.1
 require (
 	entgo.io/ent v0.14.5
 	github.com/go-sql-driver/mysql v1.9.3
+	github.com/joho/godotenv v1.5.1
 )
 
 require (
