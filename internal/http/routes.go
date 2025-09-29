@@ -9,6 +9,7 @@ import (
 
 func SetupRoutes(router *gin.Engine, client *ent.Client) {
 	userHandler := handlers.NewUserHandler(client)
+	transactionHandler := handlers.NewTransactionHandler(client)
 
 	api := router.Group("/api")
 
@@ -27,7 +28,23 @@ func SetupRoutes(router *gin.Engine, client *ent.Client) {
 		// users.DELETE("/:id", userHandler.Delete)
 	}
 
-	// TODO: Implement CategoryHandler and Transaction routes
+	// Transaction routes
+	transactions := api.Group("/transactions")
+	{
+		transactions.GET("/", transactionHandler.List)
+		transactions.POST("/", transactionHandler.Create)
+		transactions.GET("/:id", transactionHandler.GetByID)
+		transactions.PUT("/:id", transactionHandler.Update)
+		transactions.DELETE("/:id", transactionHandler.Delete)
+	}
+
+	// User transactions routes
+	userTransactions := api.Group("/users/:user_id/transactions")
+	{
+		userTransactions.GET("/", transactionHandler.GetByUserID)
+	}
+
+	// TODO: Implement CategoryHandler
 	// categories := api.Group("/categories")
 	// {
 	//     categories.GET("/", categoryHandler.List)

@@ -36,6 +36,20 @@ func (_c *TransactionCreate) SetNillableUserID(v *int) *TransactionCreate {
 	return _c
 }
 
+// SetCategoryID sets the "category_id" field.
+func (_c *TransactionCreate) SetCategoryID(v int) *TransactionCreate {
+	_c.mutation.SetCategoryID(v)
+	return _c
+}
+
+// SetNillableCategoryID sets the "category_id" field if the given value is not nil.
+func (_c *TransactionCreate) SetNillableCategoryID(v *int) *TransactionCreate {
+	if v != nil {
+		_c.SetCategoryID(*v)
+	}
+	return _c
+}
+
 // SetType sets the "type" field.
 func (_c *TransactionCreate) SetType(v transaction.Type) *TransactionCreate {
 	_c.mutation.SetType(v)
@@ -54,26 +68,6 @@ func (_c *TransactionCreate) SetCurrency(v string) *TransactionCreate {
 	return _c
 }
 
-// SetConversionRate sets the "conversion_rate" field.
-func (_c *TransactionCreate) SetConversionRate(v float64) *TransactionCreate {
-	_c.mutation.SetConversionRate(v)
-	return _c
-}
-
-// SetCategoryID sets the "category_id" field.
-func (_c *TransactionCreate) SetCategoryID(v int) *TransactionCreate {
-	_c.mutation.SetCategoryID(v)
-	return _c
-}
-
-// SetNillableCategoryID sets the "category_id" field if the given value is not nil.
-func (_c *TransactionCreate) SetNillableCategoryID(v *int) *TransactionCreate {
-	if v != nil {
-		_c.SetCategoryID(*v)
-	}
-	return _c
-}
-
 // SetDescription sets the "description" field.
 func (_c *TransactionCreate) SetDescription(v string) *TransactionCreate {
 	_c.mutation.SetDescription(v)
@@ -84,6 +78,34 @@ func (_c *TransactionCreate) SetDescription(v string) *TransactionCreate {
 func (_c *TransactionCreate) SetNillableDescription(v *string) *TransactionCreate {
 	if v != nil {
 		_c.SetDescription(*v)
+	}
+	return _c
+}
+
+// SetFrom sets the "from" field.
+func (_c *TransactionCreate) SetFrom(v string) *TransactionCreate {
+	_c.mutation.SetFrom(v)
+	return _c
+}
+
+// SetNillableFrom sets the "from" field if the given value is not nil.
+func (_c *TransactionCreate) SetNillableFrom(v *string) *TransactionCreate {
+	if v != nil {
+		_c.SetFrom(*v)
+	}
+	return _c
+}
+
+// SetConversionRate sets the "conversion_rate" field.
+func (_c *TransactionCreate) SetConversionRate(v float64) *TransactionCreate {
+	_c.mutation.SetConversionRate(v)
+	return _c
+}
+
+// SetNillableConversionRate sets the "conversion_rate" field if the given value is not nil.
+func (_c *TransactionCreate) SetNillableConversionRate(v *float64) *TransactionCreate {
+	if v != nil {
+		_c.SetConversionRate(*v)
 	}
 	return _c
 }
@@ -186,9 +208,6 @@ func (_c *TransactionCreate) check() error {
 	if _, ok := _c.mutation.Currency(); !ok {
 		return &ValidationError{Name: "currency", err: errors.New(`ent: missing required field "Transaction.currency"`)}
 	}
-	if _, ok := _c.mutation.ConversionRate(); !ok {
-		return &ValidationError{Name: "conversion_rate", err: errors.New(`ent: missing required field "Transaction.conversion_rate"`)}
-	}
 	if _, ok := _c.mutation.TxDate(); !ok {
 		return &ValidationError{Name: "tx_date", err: errors.New(`ent: missing required field "Transaction.tx_date"`)}
 	}
@@ -236,13 +255,17 @@ func (_c *TransactionCreate) createSpec() (*Transaction, *sqlgraph.CreateSpec) {
 		_spec.SetField(transaction.FieldCurrency, field.TypeString, value)
 		_node.Currency = value
 	}
-	if value, ok := _c.mutation.ConversionRate(); ok {
-		_spec.SetField(transaction.FieldConversionRate, field.TypeFloat64, value)
-		_node.ConversionRate = value
-	}
 	if value, ok := _c.mutation.Description(); ok {
 		_spec.SetField(transaction.FieldDescription, field.TypeString, value)
 		_node.Description = value
+	}
+	if value, ok := _c.mutation.From(); ok {
+		_spec.SetField(transaction.FieldFrom, field.TypeString, value)
+		_node.From = value
+	}
+	if value, ok := _c.mutation.ConversionRate(); ok {
+		_spec.SetField(transaction.FieldConversionRate, field.TypeFloat64, value)
+		_node.ConversionRate = value
 	}
 	if value, ok := _c.mutation.TxDate(); ok {
 		_spec.SetField(transaction.FieldTxDate, field.TypeTime, value)

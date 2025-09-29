@@ -16,18 +16,20 @@ const (
 	FieldID = "id"
 	// FieldUserID holds the string denoting the user_id field in the database.
 	FieldUserID = "user_id"
+	// FieldCategoryID holds the string denoting the category_id field in the database.
+	FieldCategoryID = "category_id"
 	// FieldType holds the string denoting the type field in the database.
 	FieldType = "type"
 	// FieldAmount holds the string denoting the amount field in the database.
 	FieldAmount = "amount"
 	// FieldCurrency holds the string denoting the currency field in the database.
 	FieldCurrency = "currency"
-	// FieldConversionRate holds the string denoting the conversion_rate field in the database.
-	FieldConversionRate = "conversion_rate"
-	// FieldCategoryID holds the string denoting the category_id field in the database.
-	FieldCategoryID = "category_id"
 	// FieldDescription holds the string denoting the description field in the database.
 	FieldDescription = "description"
+	// FieldFrom holds the string denoting the from field in the database.
+	FieldFrom = "from"
+	// FieldConversionRate holds the string denoting the conversion_rate field in the database.
+	FieldConversionRate = "conversion_rate"
 	// FieldTxDate holds the string denoting the tx_date field in the database.
 	FieldTxDate = "tx_date"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
@@ -60,12 +62,13 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldUserID,
+	FieldCategoryID,
 	FieldType,
 	FieldAmount,
 	FieldCurrency,
-	FieldConversionRate,
-	FieldCategoryID,
 	FieldDescription,
+	FieldFrom,
+	FieldConversionRate,
 	FieldTxDate,
 	FieldCreatedAt,
 	FieldUpdatedAt,
@@ -86,8 +89,8 @@ type Type string
 
 // Type values.
 const (
-	TypeGasto   Type = "gasto"
-	TypeIngreso Type = "ingreso"
+	TypeIncome  Type = "income"
+	TypeExpense Type = "expense"
 )
 
 func (_type Type) String() string {
@@ -97,7 +100,7 @@ func (_type Type) String() string {
 // TypeValidator is a validator for the "type" field enum values. It is called by the builders before save.
 func TypeValidator(_type Type) error {
 	switch _type {
-	case TypeGasto, TypeIngreso:
+	case TypeIncome, TypeExpense:
 		return nil
 	default:
 		return fmt.Errorf("transaction: invalid enum value for type field: %q", _type)
@@ -117,6 +120,11 @@ func ByUserID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUserID, opts...).ToFunc()
 }
 
+// ByCategoryID orders the results by the category_id field.
+func ByCategoryID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCategoryID, opts...).ToFunc()
+}
+
 // ByType orders the results by the type field.
 func ByType(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldType, opts...).ToFunc()
@@ -132,19 +140,19 @@ func ByCurrency(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCurrency, opts...).ToFunc()
 }
 
-// ByConversionRate orders the results by the conversion_rate field.
-func ByConversionRate(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldConversionRate, opts...).ToFunc()
-}
-
-// ByCategoryID orders the results by the category_id field.
-func ByCategoryID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCategoryID, opts...).ToFunc()
-}
-
 // ByDescription orders the results by the description field.
 func ByDescription(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDescription, opts...).ToFunc()
+}
+
+// ByFrom orders the results by the from field.
+func ByFrom(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldFrom, opts...).ToFunc()
+}
+
+// ByConversionRate orders the results by the conversion_rate field.
+func ByConversionRate(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldConversionRate, opts...).ToFunc()
 }
 
 // ByTxDate orders the results by the tx_date field.

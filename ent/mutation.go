@@ -645,9 +645,10 @@ type TransactionMutation struct {
 	amount             *float64
 	addamount          *float64
 	currency           *string
+	description        *string
+	from               *string
 	conversion_rate    *float64
 	addconversion_rate *float64
-	description        *string
 	tx_date            *time.Time
 	created_at         *time.Time
 	updated_at         *time.Time
@@ -814,6 +815,55 @@ func (m *TransactionMutation) ResetUserID() {
 	delete(m.clearedFields, transaction.FieldUserID)
 }
 
+// SetCategoryID sets the "category_id" field.
+func (m *TransactionMutation) SetCategoryID(i int) {
+	m.category = &i
+}
+
+// CategoryID returns the value of the "category_id" field in the mutation.
+func (m *TransactionMutation) CategoryID() (r int, exists bool) {
+	v := m.category
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCategoryID returns the old "category_id" field's value of the Transaction entity.
+// If the Transaction object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TransactionMutation) OldCategoryID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCategoryID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCategoryID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCategoryID: %w", err)
+	}
+	return oldValue.CategoryID, nil
+}
+
+// ClearCategoryID clears the value of the "category_id" field.
+func (m *TransactionMutation) ClearCategoryID() {
+	m.category = nil
+	m.clearedFields[transaction.FieldCategoryID] = struct{}{}
+}
+
+// CategoryIDCleared returns if the "category_id" field was cleared in this mutation.
+func (m *TransactionMutation) CategoryIDCleared() bool {
+	_, ok := m.clearedFields[transaction.FieldCategoryID]
+	return ok
+}
+
+// ResetCategoryID resets all changes to the "category_id" field.
+func (m *TransactionMutation) ResetCategoryID() {
+	m.category = nil
+	delete(m.clearedFields, transaction.FieldCategoryID)
+}
+
 // SetType sets the "type" field.
 func (m *TransactionMutation) SetType(t transaction.Type) {
 	m._type = &t
@@ -942,6 +992,104 @@ func (m *TransactionMutation) ResetCurrency() {
 	m.currency = nil
 }
 
+// SetDescription sets the "description" field.
+func (m *TransactionMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *TransactionMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the Transaction entity.
+// If the Transaction object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TransactionMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ClearDescription clears the value of the "description" field.
+func (m *TransactionMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[transaction.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *TransactionMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[transaction.FieldDescription]
+	return ok
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *TransactionMutation) ResetDescription() {
+	m.description = nil
+	delete(m.clearedFields, transaction.FieldDescription)
+}
+
+// SetFrom sets the "from" field.
+func (m *TransactionMutation) SetFrom(s string) {
+	m.from = &s
+}
+
+// From returns the value of the "from" field in the mutation.
+func (m *TransactionMutation) From() (r string, exists bool) {
+	v := m.from
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFrom returns the old "from" field's value of the Transaction entity.
+// If the Transaction object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TransactionMutation) OldFrom(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldFrom is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldFrom requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFrom: %w", err)
+	}
+	return oldValue.From, nil
+}
+
+// ClearFrom clears the value of the "from" field.
+func (m *TransactionMutation) ClearFrom() {
+	m.from = nil
+	m.clearedFields[transaction.FieldFrom] = struct{}{}
+}
+
+// FromCleared returns if the "from" field was cleared in this mutation.
+func (m *TransactionMutation) FromCleared() bool {
+	_, ok := m.clearedFields[transaction.FieldFrom]
+	return ok
+}
+
+// ResetFrom resets all changes to the "from" field.
+func (m *TransactionMutation) ResetFrom() {
+	m.from = nil
+	delete(m.clearedFields, transaction.FieldFrom)
+}
+
 // SetConversionRate sets the "conversion_rate" field.
 func (m *TransactionMutation) SetConversionRate(f float64) {
 	m.conversion_rate = &f
@@ -992,108 +1140,24 @@ func (m *TransactionMutation) AddedConversionRate() (r float64, exists bool) {
 	return *v, true
 }
 
+// ClearConversionRate clears the value of the "conversion_rate" field.
+func (m *TransactionMutation) ClearConversionRate() {
+	m.conversion_rate = nil
+	m.addconversion_rate = nil
+	m.clearedFields[transaction.FieldConversionRate] = struct{}{}
+}
+
+// ConversionRateCleared returns if the "conversion_rate" field was cleared in this mutation.
+func (m *TransactionMutation) ConversionRateCleared() bool {
+	_, ok := m.clearedFields[transaction.FieldConversionRate]
+	return ok
+}
+
 // ResetConversionRate resets all changes to the "conversion_rate" field.
 func (m *TransactionMutation) ResetConversionRate() {
 	m.conversion_rate = nil
 	m.addconversion_rate = nil
-}
-
-// SetCategoryID sets the "category_id" field.
-func (m *TransactionMutation) SetCategoryID(i int) {
-	m.category = &i
-}
-
-// CategoryID returns the value of the "category_id" field in the mutation.
-func (m *TransactionMutation) CategoryID() (r int, exists bool) {
-	v := m.category
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldCategoryID returns the old "category_id" field's value of the Transaction entity.
-// If the Transaction object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *TransactionMutation) OldCategoryID(ctx context.Context) (v int, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldCategoryID is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldCategoryID requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldCategoryID: %w", err)
-	}
-	return oldValue.CategoryID, nil
-}
-
-// ClearCategoryID clears the value of the "category_id" field.
-func (m *TransactionMutation) ClearCategoryID() {
-	m.category = nil
-	m.clearedFields[transaction.FieldCategoryID] = struct{}{}
-}
-
-// CategoryIDCleared returns if the "category_id" field was cleared in this mutation.
-func (m *TransactionMutation) CategoryIDCleared() bool {
-	_, ok := m.clearedFields[transaction.FieldCategoryID]
-	return ok
-}
-
-// ResetCategoryID resets all changes to the "category_id" field.
-func (m *TransactionMutation) ResetCategoryID() {
-	m.category = nil
-	delete(m.clearedFields, transaction.FieldCategoryID)
-}
-
-// SetDescription sets the "description" field.
-func (m *TransactionMutation) SetDescription(s string) {
-	m.description = &s
-}
-
-// Description returns the value of the "description" field in the mutation.
-func (m *TransactionMutation) Description() (r string, exists bool) {
-	v := m.description
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldDescription returns the old "description" field's value of the Transaction entity.
-// If the Transaction object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *TransactionMutation) OldDescription(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldDescription requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
-	}
-	return oldValue.Description, nil
-}
-
-// ClearDescription clears the value of the "description" field.
-func (m *TransactionMutation) ClearDescription() {
-	m.description = nil
-	m.clearedFields[transaction.FieldDescription] = struct{}{}
-}
-
-// DescriptionCleared returns if the "description" field was cleared in this mutation.
-func (m *TransactionMutation) DescriptionCleared() bool {
-	_, ok := m.clearedFields[transaction.FieldDescription]
-	return ok
-}
-
-// ResetDescription resets all changes to the "description" field.
-func (m *TransactionMutation) ResetDescription() {
-	m.description = nil
-	delete(m.clearedFields, transaction.FieldDescription)
+	delete(m.clearedFields, transaction.FieldConversionRate)
 }
 
 // SetTxDate sets the "tx_date" field.
@@ -1318,9 +1382,12 @@ func (m *TransactionMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *TransactionMutation) Fields() []string {
-	fields := make([]string, 0, 10)
+	fields := make([]string, 0, 11)
 	if m.user != nil {
 		fields = append(fields, transaction.FieldUserID)
+	}
+	if m.category != nil {
+		fields = append(fields, transaction.FieldCategoryID)
 	}
 	if m._type != nil {
 		fields = append(fields, transaction.FieldType)
@@ -1331,14 +1398,14 @@ func (m *TransactionMutation) Fields() []string {
 	if m.currency != nil {
 		fields = append(fields, transaction.FieldCurrency)
 	}
-	if m.conversion_rate != nil {
-		fields = append(fields, transaction.FieldConversionRate)
-	}
-	if m.category != nil {
-		fields = append(fields, transaction.FieldCategoryID)
-	}
 	if m.description != nil {
 		fields = append(fields, transaction.FieldDescription)
+	}
+	if m.from != nil {
+		fields = append(fields, transaction.FieldFrom)
+	}
+	if m.conversion_rate != nil {
+		fields = append(fields, transaction.FieldConversionRate)
 	}
 	if m.tx_date != nil {
 		fields = append(fields, transaction.FieldTxDate)
@@ -1359,18 +1426,20 @@ func (m *TransactionMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case transaction.FieldUserID:
 		return m.UserID()
+	case transaction.FieldCategoryID:
+		return m.CategoryID()
 	case transaction.FieldType:
 		return m.GetType()
 	case transaction.FieldAmount:
 		return m.Amount()
 	case transaction.FieldCurrency:
 		return m.Currency()
-	case transaction.FieldConversionRate:
-		return m.ConversionRate()
-	case transaction.FieldCategoryID:
-		return m.CategoryID()
 	case transaction.FieldDescription:
 		return m.Description()
+	case transaction.FieldFrom:
+		return m.From()
+	case transaction.FieldConversionRate:
+		return m.ConversionRate()
 	case transaction.FieldTxDate:
 		return m.TxDate()
 	case transaction.FieldCreatedAt:
@@ -1388,18 +1457,20 @@ func (m *TransactionMutation) OldField(ctx context.Context, name string) (ent.Va
 	switch name {
 	case transaction.FieldUserID:
 		return m.OldUserID(ctx)
+	case transaction.FieldCategoryID:
+		return m.OldCategoryID(ctx)
 	case transaction.FieldType:
 		return m.OldType(ctx)
 	case transaction.FieldAmount:
 		return m.OldAmount(ctx)
 	case transaction.FieldCurrency:
 		return m.OldCurrency(ctx)
-	case transaction.FieldConversionRate:
-		return m.OldConversionRate(ctx)
-	case transaction.FieldCategoryID:
-		return m.OldCategoryID(ctx)
 	case transaction.FieldDescription:
 		return m.OldDescription(ctx)
+	case transaction.FieldFrom:
+		return m.OldFrom(ctx)
+	case transaction.FieldConversionRate:
+		return m.OldConversionRate(ctx)
 	case transaction.FieldTxDate:
 		return m.OldTxDate(ctx)
 	case transaction.FieldCreatedAt:
@@ -1422,6 +1493,13 @@ func (m *TransactionMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetUserID(v)
 		return nil
+	case transaction.FieldCategoryID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCategoryID(v)
+		return nil
 	case transaction.FieldType:
 		v, ok := value.(transaction.Type)
 		if !ok {
@@ -1443,26 +1521,26 @@ func (m *TransactionMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetCurrency(v)
 		return nil
-	case transaction.FieldConversionRate:
-		v, ok := value.(float64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetConversionRate(v)
-		return nil
-	case transaction.FieldCategoryID:
-		v, ok := value.(int)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetCategoryID(v)
-		return nil
 	case transaction.FieldDescription:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDescription(v)
+		return nil
+	case transaction.FieldFrom:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFrom(v)
+		return nil
+	case transaction.FieldConversionRate:
+		v, ok := value.(float64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetConversionRate(v)
 		return nil
 	case transaction.FieldTxDate:
 		v, ok := value.(time.Time)
@@ -1551,6 +1629,12 @@ func (m *TransactionMutation) ClearedFields() []string {
 	if m.FieldCleared(transaction.FieldDescription) {
 		fields = append(fields, transaction.FieldDescription)
 	}
+	if m.FieldCleared(transaction.FieldFrom) {
+		fields = append(fields, transaction.FieldFrom)
+	}
+	if m.FieldCleared(transaction.FieldConversionRate) {
+		fields = append(fields, transaction.FieldConversionRate)
+	}
 	if m.FieldCleared(transaction.FieldCreatedAt) {
 		fields = append(fields, transaction.FieldCreatedAt)
 	}
@@ -1580,6 +1664,12 @@ func (m *TransactionMutation) ClearField(name string) error {
 	case transaction.FieldDescription:
 		m.ClearDescription()
 		return nil
+	case transaction.FieldFrom:
+		m.ClearFrom()
+		return nil
+	case transaction.FieldConversionRate:
+		m.ClearConversionRate()
+		return nil
 	case transaction.FieldCreatedAt:
 		m.ClearCreatedAt()
 		return nil
@@ -1597,6 +1687,9 @@ func (m *TransactionMutation) ResetField(name string) error {
 	case transaction.FieldUserID:
 		m.ResetUserID()
 		return nil
+	case transaction.FieldCategoryID:
+		m.ResetCategoryID()
+		return nil
 	case transaction.FieldType:
 		m.ResetType()
 		return nil
@@ -1606,14 +1699,14 @@ func (m *TransactionMutation) ResetField(name string) error {
 	case transaction.FieldCurrency:
 		m.ResetCurrency()
 		return nil
-	case transaction.FieldConversionRate:
-		m.ResetConversionRate()
-		return nil
-	case transaction.FieldCategoryID:
-		m.ResetCategoryID()
-		return nil
 	case transaction.FieldDescription:
 		m.ResetDescription()
+		return nil
+	case transaction.FieldFrom:
+		m.ResetFrom()
+		return nil
+	case transaction.FieldConversionRate:
+		m.ResetConversionRate()
 		return nil
 	case transaction.FieldTxDate:
 		m.ResetTxDate()

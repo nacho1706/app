@@ -14,10 +14,23 @@ type Transaction struct {
 }
 
 func (Transaction) Fields() []ent.Field {
-	return []ent.Field{field.Int("id"), field.Int("user_id").Optional(), field.Enum("type").Values("gasto", "ingreso"), field.Float("amount"), field.String("currency"), field.Float("conversion_rate"), field.Int("category_id").Optional(), field.String("description").Optional(), field.Time("tx_date"), field.Time("created_at").Optional(), field.Time("updated_at").Optional()}
+	return []ent.Field{field.Int("id"),
+		field.Int("user_id").Optional(),
+		field.Int("category_id").Optional(),
+		field.Enum("type").Values("income", "expense"),
+		field.Float("amount"), field.String("currency"),
+		field.String("description").Optional(),
+		field.String("from").Optional(),
+		field.Float("conversion_rate").Optional(),
+		field.Time("tx_date"),
+		field.Time("created_at").Optional(),
+		field.Time("updated_at").Optional()}
 }
 func (Transaction) Edges() []ent.Edge {
-	return []ent.Edge{edge.From("user", User.Type).Ref("transactions").Unique().Field("user_id"), edge.From("category", Category.Type).Ref("transactions").Unique().Field("category_id")}
+	return []ent.Edge{
+		edge.From("user", User.Type).Ref("transactions").Unique().Field("user_id"),
+		edge.From("category", Category.Type).Ref("transactions").Unique().Field("category_id"),
+	}
 }
 func (Transaction) Annotations() []schema.Annotation {
 	return nil

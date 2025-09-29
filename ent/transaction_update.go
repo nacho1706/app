@@ -50,6 +50,26 @@ func (_u *TransactionUpdate) ClearUserID() *TransactionUpdate {
 	return _u
 }
 
+// SetCategoryID sets the "category_id" field.
+func (_u *TransactionUpdate) SetCategoryID(v int) *TransactionUpdate {
+	_u.mutation.SetCategoryID(v)
+	return _u
+}
+
+// SetNillableCategoryID sets the "category_id" field if the given value is not nil.
+func (_u *TransactionUpdate) SetNillableCategoryID(v *int) *TransactionUpdate {
+	if v != nil {
+		_u.SetCategoryID(*v)
+	}
+	return _u
+}
+
+// ClearCategoryID clears the value of the "category_id" field.
+func (_u *TransactionUpdate) ClearCategoryID() *TransactionUpdate {
+	_u.mutation.ClearCategoryID()
+	return _u
+}
+
 // SetType sets the "type" field.
 func (_u *TransactionUpdate) SetType(v transaction.Type) *TransactionUpdate {
 	_u.mutation.SetType(v)
@@ -99,6 +119,46 @@ func (_u *TransactionUpdate) SetNillableCurrency(v *string) *TransactionUpdate {
 	return _u
 }
 
+// SetDescription sets the "description" field.
+func (_u *TransactionUpdate) SetDescription(v string) *TransactionUpdate {
+	_u.mutation.SetDescription(v)
+	return _u
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_u *TransactionUpdate) SetNillableDescription(v *string) *TransactionUpdate {
+	if v != nil {
+		_u.SetDescription(*v)
+	}
+	return _u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (_u *TransactionUpdate) ClearDescription() *TransactionUpdate {
+	_u.mutation.ClearDescription()
+	return _u
+}
+
+// SetFrom sets the "from" field.
+func (_u *TransactionUpdate) SetFrom(v string) *TransactionUpdate {
+	_u.mutation.SetFrom(v)
+	return _u
+}
+
+// SetNillableFrom sets the "from" field if the given value is not nil.
+func (_u *TransactionUpdate) SetNillableFrom(v *string) *TransactionUpdate {
+	if v != nil {
+		_u.SetFrom(*v)
+	}
+	return _u
+}
+
+// ClearFrom clears the value of the "from" field.
+func (_u *TransactionUpdate) ClearFrom() *TransactionUpdate {
+	_u.mutation.ClearFrom()
+	return _u
+}
+
 // SetConversionRate sets the "conversion_rate" field.
 func (_u *TransactionUpdate) SetConversionRate(v float64) *TransactionUpdate {
 	_u.mutation.ResetConversionRate()
@@ -120,43 +180,9 @@ func (_u *TransactionUpdate) AddConversionRate(v float64) *TransactionUpdate {
 	return _u
 }
 
-// SetCategoryID sets the "category_id" field.
-func (_u *TransactionUpdate) SetCategoryID(v int) *TransactionUpdate {
-	_u.mutation.SetCategoryID(v)
-	return _u
-}
-
-// SetNillableCategoryID sets the "category_id" field if the given value is not nil.
-func (_u *TransactionUpdate) SetNillableCategoryID(v *int) *TransactionUpdate {
-	if v != nil {
-		_u.SetCategoryID(*v)
-	}
-	return _u
-}
-
-// ClearCategoryID clears the value of the "category_id" field.
-func (_u *TransactionUpdate) ClearCategoryID() *TransactionUpdate {
-	_u.mutation.ClearCategoryID()
-	return _u
-}
-
-// SetDescription sets the "description" field.
-func (_u *TransactionUpdate) SetDescription(v string) *TransactionUpdate {
-	_u.mutation.SetDescription(v)
-	return _u
-}
-
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_u *TransactionUpdate) SetNillableDescription(v *string) *TransactionUpdate {
-	if v != nil {
-		_u.SetDescription(*v)
-	}
-	return _u
-}
-
-// ClearDescription clears the value of the "description" field.
-func (_u *TransactionUpdate) ClearDescription() *TransactionUpdate {
-	_u.mutation.ClearDescription()
+// ClearConversionRate clears the value of the "conversion_rate" field.
+func (_u *TransactionUpdate) ClearConversionRate() *TransactionUpdate {
+	_u.mutation.ClearConversionRate()
 	return _u
 }
 
@@ -302,17 +328,26 @@ func (_u *TransactionUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	if value, ok := _u.mutation.Currency(); ok {
 		_spec.SetField(transaction.FieldCurrency, field.TypeString, value)
 	}
+	if value, ok := _u.mutation.Description(); ok {
+		_spec.SetField(transaction.FieldDescription, field.TypeString, value)
+	}
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(transaction.FieldDescription, field.TypeString)
+	}
+	if value, ok := _u.mutation.From(); ok {
+		_spec.SetField(transaction.FieldFrom, field.TypeString, value)
+	}
+	if _u.mutation.FromCleared() {
+		_spec.ClearField(transaction.FieldFrom, field.TypeString)
+	}
 	if value, ok := _u.mutation.ConversionRate(); ok {
 		_spec.SetField(transaction.FieldConversionRate, field.TypeFloat64, value)
 	}
 	if value, ok := _u.mutation.AddedConversionRate(); ok {
 		_spec.AddField(transaction.FieldConversionRate, field.TypeFloat64, value)
 	}
-	if value, ok := _u.mutation.Description(); ok {
-		_spec.SetField(transaction.FieldDescription, field.TypeString, value)
-	}
-	if _u.mutation.DescriptionCleared() {
-		_spec.ClearField(transaction.FieldDescription, field.TypeString)
+	if _u.mutation.ConversionRateCleared() {
+		_spec.ClearField(transaction.FieldConversionRate, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.TxDate(); ok {
 		_spec.SetField(transaction.FieldTxDate, field.TypeTime, value)
@@ -427,6 +462,26 @@ func (_u *TransactionUpdateOne) ClearUserID() *TransactionUpdateOne {
 	return _u
 }
 
+// SetCategoryID sets the "category_id" field.
+func (_u *TransactionUpdateOne) SetCategoryID(v int) *TransactionUpdateOne {
+	_u.mutation.SetCategoryID(v)
+	return _u
+}
+
+// SetNillableCategoryID sets the "category_id" field if the given value is not nil.
+func (_u *TransactionUpdateOne) SetNillableCategoryID(v *int) *TransactionUpdateOne {
+	if v != nil {
+		_u.SetCategoryID(*v)
+	}
+	return _u
+}
+
+// ClearCategoryID clears the value of the "category_id" field.
+func (_u *TransactionUpdateOne) ClearCategoryID() *TransactionUpdateOne {
+	_u.mutation.ClearCategoryID()
+	return _u
+}
+
 // SetType sets the "type" field.
 func (_u *TransactionUpdateOne) SetType(v transaction.Type) *TransactionUpdateOne {
 	_u.mutation.SetType(v)
@@ -476,6 +531,46 @@ func (_u *TransactionUpdateOne) SetNillableCurrency(v *string) *TransactionUpdat
 	return _u
 }
 
+// SetDescription sets the "description" field.
+func (_u *TransactionUpdateOne) SetDescription(v string) *TransactionUpdateOne {
+	_u.mutation.SetDescription(v)
+	return _u
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_u *TransactionUpdateOne) SetNillableDescription(v *string) *TransactionUpdateOne {
+	if v != nil {
+		_u.SetDescription(*v)
+	}
+	return _u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (_u *TransactionUpdateOne) ClearDescription() *TransactionUpdateOne {
+	_u.mutation.ClearDescription()
+	return _u
+}
+
+// SetFrom sets the "from" field.
+func (_u *TransactionUpdateOne) SetFrom(v string) *TransactionUpdateOne {
+	_u.mutation.SetFrom(v)
+	return _u
+}
+
+// SetNillableFrom sets the "from" field if the given value is not nil.
+func (_u *TransactionUpdateOne) SetNillableFrom(v *string) *TransactionUpdateOne {
+	if v != nil {
+		_u.SetFrom(*v)
+	}
+	return _u
+}
+
+// ClearFrom clears the value of the "from" field.
+func (_u *TransactionUpdateOne) ClearFrom() *TransactionUpdateOne {
+	_u.mutation.ClearFrom()
+	return _u
+}
+
 // SetConversionRate sets the "conversion_rate" field.
 func (_u *TransactionUpdateOne) SetConversionRate(v float64) *TransactionUpdateOne {
 	_u.mutation.ResetConversionRate()
@@ -497,43 +592,9 @@ func (_u *TransactionUpdateOne) AddConversionRate(v float64) *TransactionUpdateO
 	return _u
 }
 
-// SetCategoryID sets the "category_id" field.
-func (_u *TransactionUpdateOne) SetCategoryID(v int) *TransactionUpdateOne {
-	_u.mutation.SetCategoryID(v)
-	return _u
-}
-
-// SetNillableCategoryID sets the "category_id" field if the given value is not nil.
-func (_u *TransactionUpdateOne) SetNillableCategoryID(v *int) *TransactionUpdateOne {
-	if v != nil {
-		_u.SetCategoryID(*v)
-	}
-	return _u
-}
-
-// ClearCategoryID clears the value of the "category_id" field.
-func (_u *TransactionUpdateOne) ClearCategoryID() *TransactionUpdateOne {
-	_u.mutation.ClearCategoryID()
-	return _u
-}
-
-// SetDescription sets the "description" field.
-func (_u *TransactionUpdateOne) SetDescription(v string) *TransactionUpdateOne {
-	_u.mutation.SetDescription(v)
-	return _u
-}
-
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_u *TransactionUpdateOne) SetNillableDescription(v *string) *TransactionUpdateOne {
-	if v != nil {
-		_u.SetDescription(*v)
-	}
-	return _u
-}
-
-// ClearDescription clears the value of the "description" field.
-func (_u *TransactionUpdateOne) ClearDescription() *TransactionUpdateOne {
-	_u.mutation.ClearDescription()
+// ClearConversionRate clears the value of the "conversion_rate" field.
+func (_u *TransactionUpdateOne) ClearConversionRate() *TransactionUpdateOne {
+	_u.mutation.ClearConversionRate()
 	return _u
 }
 
@@ -709,17 +770,26 @@ func (_u *TransactionUpdateOne) sqlSave(ctx context.Context) (_node *Transaction
 	if value, ok := _u.mutation.Currency(); ok {
 		_spec.SetField(transaction.FieldCurrency, field.TypeString, value)
 	}
+	if value, ok := _u.mutation.Description(); ok {
+		_spec.SetField(transaction.FieldDescription, field.TypeString, value)
+	}
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(transaction.FieldDescription, field.TypeString)
+	}
+	if value, ok := _u.mutation.From(); ok {
+		_spec.SetField(transaction.FieldFrom, field.TypeString, value)
+	}
+	if _u.mutation.FromCleared() {
+		_spec.ClearField(transaction.FieldFrom, field.TypeString)
+	}
 	if value, ok := _u.mutation.ConversionRate(); ok {
 		_spec.SetField(transaction.FieldConversionRate, field.TypeFloat64, value)
 	}
 	if value, ok := _u.mutation.AddedConversionRate(); ok {
 		_spec.AddField(transaction.FieldConversionRate, field.TypeFloat64, value)
 	}
-	if value, ok := _u.mutation.Description(); ok {
-		_spec.SetField(transaction.FieldDescription, field.TypeString, value)
-	}
-	if _u.mutation.DescriptionCleared() {
-		_spec.ClearField(transaction.FieldDescription, field.TypeString)
+	if _u.mutation.ConversionRateCleared() {
+		_spec.ClearField(transaction.FieldConversionRate, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.TxDate(); ok {
 		_spec.SetField(transaction.FieldTxDate, field.TypeTime, value)

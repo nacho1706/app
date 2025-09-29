@@ -60,6 +60,11 @@ func UserID(v int) predicate.Transaction {
 	return predicate.Transaction(sql.FieldEQ(FieldUserID, v))
 }
 
+// CategoryID applies equality check predicate on the "category_id" field. It's identical to CategoryIDEQ.
+func CategoryID(v int) predicate.Transaction {
+	return predicate.Transaction(sql.FieldEQ(FieldCategoryID, v))
+}
+
 // Amount applies equality check predicate on the "amount" field. It's identical to AmountEQ.
 func Amount(v float64) predicate.Transaction {
 	return predicate.Transaction(sql.FieldEQ(FieldAmount, v))
@@ -70,19 +75,19 @@ func Currency(v string) predicate.Transaction {
 	return predicate.Transaction(sql.FieldEQ(FieldCurrency, v))
 }
 
-// ConversionRate applies equality check predicate on the "conversion_rate" field. It's identical to ConversionRateEQ.
-func ConversionRate(v float64) predicate.Transaction {
-	return predicate.Transaction(sql.FieldEQ(FieldConversionRate, v))
-}
-
-// CategoryID applies equality check predicate on the "category_id" field. It's identical to CategoryIDEQ.
-func CategoryID(v int) predicate.Transaction {
-	return predicate.Transaction(sql.FieldEQ(FieldCategoryID, v))
-}
-
 // Description applies equality check predicate on the "description" field. It's identical to DescriptionEQ.
 func Description(v string) predicate.Transaction {
 	return predicate.Transaction(sql.FieldEQ(FieldDescription, v))
+}
+
+// From applies equality check predicate on the "from" field. It's identical to FromEQ.
+func From(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldEQ(FieldFrom, v))
+}
+
+// ConversionRate applies equality check predicate on the "conversion_rate" field. It's identical to ConversionRateEQ.
+func ConversionRate(v float64) predicate.Transaction {
+	return predicate.Transaction(sql.FieldEQ(FieldConversionRate, v))
 }
 
 // TxDate applies equality check predicate on the "tx_date" field. It's identical to TxDateEQ.
@@ -128,6 +133,36 @@ func UserIDIsNil() predicate.Transaction {
 // UserIDNotNil applies the NotNil predicate on the "user_id" field.
 func UserIDNotNil() predicate.Transaction {
 	return predicate.Transaction(sql.FieldNotNull(FieldUserID))
+}
+
+// CategoryIDEQ applies the EQ predicate on the "category_id" field.
+func CategoryIDEQ(v int) predicate.Transaction {
+	return predicate.Transaction(sql.FieldEQ(FieldCategoryID, v))
+}
+
+// CategoryIDNEQ applies the NEQ predicate on the "category_id" field.
+func CategoryIDNEQ(v int) predicate.Transaction {
+	return predicate.Transaction(sql.FieldNEQ(FieldCategoryID, v))
+}
+
+// CategoryIDIn applies the In predicate on the "category_id" field.
+func CategoryIDIn(vs ...int) predicate.Transaction {
+	return predicate.Transaction(sql.FieldIn(FieldCategoryID, vs...))
+}
+
+// CategoryIDNotIn applies the NotIn predicate on the "category_id" field.
+func CategoryIDNotIn(vs ...int) predicate.Transaction {
+	return predicate.Transaction(sql.FieldNotIn(FieldCategoryID, vs...))
+}
+
+// CategoryIDIsNil applies the IsNil predicate on the "category_id" field.
+func CategoryIDIsNil() predicate.Transaction {
+	return predicate.Transaction(sql.FieldIsNull(FieldCategoryID))
+}
+
+// CategoryIDNotNil applies the NotNil predicate on the "category_id" field.
+func CategoryIDNotNil() predicate.Transaction {
+	return predicate.Transaction(sql.FieldNotNull(FieldCategoryID))
 }
 
 // TypeEQ applies the EQ predicate on the "type" field.
@@ -255,76 +290,6 @@ func CurrencyContainsFold(v string) predicate.Transaction {
 	return predicate.Transaction(sql.FieldContainsFold(FieldCurrency, v))
 }
 
-// ConversionRateEQ applies the EQ predicate on the "conversion_rate" field.
-func ConversionRateEQ(v float64) predicate.Transaction {
-	return predicate.Transaction(sql.FieldEQ(FieldConversionRate, v))
-}
-
-// ConversionRateNEQ applies the NEQ predicate on the "conversion_rate" field.
-func ConversionRateNEQ(v float64) predicate.Transaction {
-	return predicate.Transaction(sql.FieldNEQ(FieldConversionRate, v))
-}
-
-// ConversionRateIn applies the In predicate on the "conversion_rate" field.
-func ConversionRateIn(vs ...float64) predicate.Transaction {
-	return predicate.Transaction(sql.FieldIn(FieldConversionRate, vs...))
-}
-
-// ConversionRateNotIn applies the NotIn predicate on the "conversion_rate" field.
-func ConversionRateNotIn(vs ...float64) predicate.Transaction {
-	return predicate.Transaction(sql.FieldNotIn(FieldConversionRate, vs...))
-}
-
-// ConversionRateGT applies the GT predicate on the "conversion_rate" field.
-func ConversionRateGT(v float64) predicate.Transaction {
-	return predicate.Transaction(sql.FieldGT(FieldConversionRate, v))
-}
-
-// ConversionRateGTE applies the GTE predicate on the "conversion_rate" field.
-func ConversionRateGTE(v float64) predicate.Transaction {
-	return predicate.Transaction(sql.FieldGTE(FieldConversionRate, v))
-}
-
-// ConversionRateLT applies the LT predicate on the "conversion_rate" field.
-func ConversionRateLT(v float64) predicate.Transaction {
-	return predicate.Transaction(sql.FieldLT(FieldConversionRate, v))
-}
-
-// ConversionRateLTE applies the LTE predicate on the "conversion_rate" field.
-func ConversionRateLTE(v float64) predicate.Transaction {
-	return predicate.Transaction(sql.FieldLTE(FieldConversionRate, v))
-}
-
-// CategoryIDEQ applies the EQ predicate on the "category_id" field.
-func CategoryIDEQ(v int) predicate.Transaction {
-	return predicate.Transaction(sql.FieldEQ(FieldCategoryID, v))
-}
-
-// CategoryIDNEQ applies the NEQ predicate on the "category_id" field.
-func CategoryIDNEQ(v int) predicate.Transaction {
-	return predicate.Transaction(sql.FieldNEQ(FieldCategoryID, v))
-}
-
-// CategoryIDIn applies the In predicate on the "category_id" field.
-func CategoryIDIn(vs ...int) predicate.Transaction {
-	return predicate.Transaction(sql.FieldIn(FieldCategoryID, vs...))
-}
-
-// CategoryIDNotIn applies the NotIn predicate on the "category_id" field.
-func CategoryIDNotIn(vs ...int) predicate.Transaction {
-	return predicate.Transaction(sql.FieldNotIn(FieldCategoryID, vs...))
-}
-
-// CategoryIDIsNil applies the IsNil predicate on the "category_id" field.
-func CategoryIDIsNil() predicate.Transaction {
-	return predicate.Transaction(sql.FieldIsNull(FieldCategoryID))
-}
-
-// CategoryIDNotNil applies the NotNil predicate on the "category_id" field.
-func CategoryIDNotNil() predicate.Transaction {
-	return predicate.Transaction(sql.FieldNotNull(FieldCategoryID))
-}
-
 // DescriptionEQ applies the EQ predicate on the "description" field.
 func DescriptionEQ(v string) predicate.Transaction {
 	return predicate.Transaction(sql.FieldEQ(FieldDescription, v))
@@ -398,6 +363,131 @@ func DescriptionEqualFold(v string) predicate.Transaction {
 // DescriptionContainsFold applies the ContainsFold predicate on the "description" field.
 func DescriptionContainsFold(v string) predicate.Transaction {
 	return predicate.Transaction(sql.FieldContainsFold(FieldDescription, v))
+}
+
+// FromEQ applies the EQ predicate on the "from" field.
+func FromEQ(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldEQ(FieldFrom, v))
+}
+
+// FromNEQ applies the NEQ predicate on the "from" field.
+func FromNEQ(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldNEQ(FieldFrom, v))
+}
+
+// FromIn applies the In predicate on the "from" field.
+func FromIn(vs ...string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldIn(FieldFrom, vs...))
+}
+
+// FromNotIn applies the NotIn predicate on the "from" field.
+func FromNotIn(vs ...string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldNotIn(FieldFrom, vs...))
+}
+
+// FromGT applies the GT predicate on the "from" field.
+func FromGT(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldGT(FieldFrom, v))
+}
+
+// FromGTE applies the GTE predicate on the "from" field.
+func FromGTE(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldGTE(FieldFrom, v))
+}
+
+// FromLT applies the LT predicate on the "from" field.
+func FromLT(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldLT(FieldFrom, v))
+}
+
+// FromLTE applies the LTE predicate on the "from" field.
+func FromLTE(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldLTE(FieldFrom, v))
+}
+
+// FromContains applies the Contains predicate on the "from" field.
+func FromContains(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldContains(FieldFrom, v))
+}
+
+// FromHasPrefix applies the HasPrefix predicate on the "from" field.
+func FromHasPrefix(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldHasPrefix(FieldFrom, v))
+}
+
+// FromHasSuffix applies the HasSuffix predicate on the "from" field.
+func FromHasSuffix(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldHasSuffix(FieldFrom, v))
+}
+
+// FromIsNil applies the IsNil predicate on the "from" field.
+func FromIsNil() predicate.Transaction {
+	return predicate.Transaction(sql.FieldIsNull(FieldFrom))
+}
+
+// FromNotNil applies the NotNil predicate on the "from" field.
+func FromNotNil() predicate.Transaction {
+	return predicate.Transaction(sql.FieldNotNull(FieldFrom))
+}
+
+// FromEqualFold applies the EqualFold predicate on the "from" field.
+func FromEqualFold(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldEqualFold(FieldFrom, v))
+}
+
+// FromContainsFold applies the ContainsFold predicate on the "from" field.
+func FromContainsFold(v string) predicate.Transaction {
+	return predicate.Transaction(sql.FieldContainsFold(FieldFrom, v))
+}
+
+// ConversionRateEQ applies the EQ predicate on the "conversion_rate" field.
+func ConversionRateEQ(v float64) predicate.Transaction {
+	return predicate.Transaction(sql.FieldEQ(FieldConversionRate, v))
+}
+
+// ConversionRateNEQ applies the NEQ predicate on the "conversion_rate" field.
+func ConversionRateNEQ(v float64) predicate.Transaction {
+	return predicate.Transaction(sql.FieldNEQ(FieldConversionRate, v))
+}
+
+// ConversionRateIn applies the In predicate on the "conversion_rate" field.
+func ConversionRateIn(vs ...float64) predicate.Transaction {
+	return predicate.Transaction(sql.FieldIn(FieldConversionRate, vs...))
+}
+
+// ConversionRateNotIn applies the NotIn predicate on the "conversion_rate" field.
+func ConversionRateNotIn(vs ...float64) predicate.Transaction {
+	return predicate.Transaction(sql.FieldNotIn(FieldConversionRate, vs...))
+}
+
+// ConversionRateGT applies the GT predicate on the "conversion_rate" field.
+func ConversionRateGT(v float64) predicate.Transaction {
+	return predicate.Transaction(sql.FieldGT(FieldConversionRate, v))
+}
+
+// ConversionRateGTE applies the GTE predicate on the "conversion_rate" field.
+func ConversionRateGTE(v float64) predicate.Transaction {
+	return predicate.Transaction(sql.FieldGTE(FieldConversionRate, v))
+}
+
+// ConversionRateLT applies the LT predicate on the "conversion_rate" field.
+func ConversionRateLT(v float64) predicate.Transaction {
+	return predicate.Transaction(sql.FieldLT(FieldConversionRate, v))
+}
+
+// ConversionRateLTE applies the LTE predicate on the "conversion_rate" field.
+func ConversionRateLTE(v float64) predicate.Transaction {
+	return predicate.Transaction(sql.FieldLTE(FieldConversionRate, v))
+}
+
+// ConversionRateIsNil applies the IsNil predicate on the "conversion_rate" field.
+func ConversionRateIsNil() predicate.Transaction {
+	return predicate.Transaction(sql.FieldIsNull(FieldConversionRate))
+}
+
+// ConversionRateNotNil applies the NotNil predicate on the "conversion_rate" field.
+func ConversionRateNotNil() predicate.Transaction {
+	return predicate.Transaction(sql.FieldNotNull(FieldConversionRate))
 }
 
 // TxDateEQ applies the EQ predicate on the "tx_date" field.

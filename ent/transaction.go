@@ -21,18 +21,20 @@ type Transaction struct {
 	ID int `json:"id,omitempty"`
 	// UserID holds the value of the "user_id" field.
 	UserID int `json:"user_id,omitempty"`
+	// CategoryID holds the value of the "category_id" field.
+	CategoryID int `json:"category_id,omitempty"`
 	// Type holds the value of the "type" field.
 	Type transaction.Type `json:"type,omitempty"`
 	// Amount holds the value of the "amount" field.
 	Amount float64 `json:"amount,omitempty"`
 	// Currency holds the value of the "currency" field.
 	Currency string `json:"currency,omitempty"`
-	// ConversionRate holds the value of the "conversion_rate" field.
-	ConversionRate float64 `json:"conversion_rate,omitempty"`
-	// CategoryID holds the value of the "category_id" field.
-	CategoryID int `json:"category_id,omitempty"`
 	// Description holds the value of the "description" field.
 	Description string `json:"description,omitempty"`
+	// From holds the value of the "from" field.
+	From string `json:"from,omitempty"`
+	// ConversionRate holds the value of the "conversion_rate" field.
+	ConversionRate float64 `json:"conversion_rate,omitempty"`
 	// TxDate holds the value of the "tx_date" field.
 	TxDate time.Time `json:"tx_date,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
@@ -87,7 +89,7 @@ func (*Transaction) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullFloat64)
 		case transaction.FieldID, transaction.FieldUserID, transaction.FieldCategoryID:
 			values[i] = new(sql.NullInt64)
-		case transaction.FieldType, transaction.FieldCurrency, transaction.FieldDescription:
+		case transaction.FieldType, transaction.FieldCurrency, transaction.FieldDescription, transaction.FieldFrom:
 			values[i] = new(sql.NullString)
 		case transaction.FieldTxDate, transaction.FieldCreatedAt, transaction.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -118,6 +120,12 @@ func (_m *Transaction) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.UserID = int(value.Int64)
 			}
+		case transaction.FieldCategoryID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field category_id", values[i])
+			} else if value.Valid {
+				_m.CategoryID = int(value.Int64)
+			}
 		case transaction.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field type", values[i])
@@ -136,23 +144,23 @@ func (_m *Transaction) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Currency = value.String
 			}
-		case transaction.FieldConversionRate:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
-				return fmt.Errorf("unexpected type %T for field conversion_rate", values[i])
-			} else if value.Valid {
-				_m.ConversionRate = value.Float64
-			}
-		case transaction.FieldCategoryID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field category_id", values[i])
-			} else if value.Valid {
-				_m.CategoryID = int(value.Int64)
-			}
 		case transaction.FieldDescription:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field description", values[i])
 			} else if value.Valid {
 				_m.Description = value.String
+			}
+		case transaction.FieldFrom:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field from", values[i])
+			} else if value.Valid {
+				_m.From = value.String
+			}
+		case transaction.FieldConversionRate:
+			if value, ok := values[i].(*sql.NullFloat64); !ok {
+				return fmt.Errorf("unexpected type %T for field conversion_rate", values[i])
+			} else if value.Valid {
+				_m.ConversionRate = value.Float64
 			}
 		case transaction.FieldTxDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -221,6 +229,9 @@ func (_m *Transaction) String() string {
 	builder.WriteString("user_id=")
 	builder.WriteString(fmt.Sprintf("%v", _m.UserID))
 	builder.WriteString(", ")
+	builder.WriteString("category_id=")
+	builder.WriteString(fmt.Sprintf("%v", _m.CategoryID))
+	builder.WriteString(", ")
 	builder.WriteString("type=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Type))
 	builder.WriteString(", ")
@@ -230,14 +241,14 @@ func (_m *Transaction) String() string {
 	builder.WriteString("currency=")
 	builder.WriteString(_m.Currency)
 	builder.WriteString(", ")
-	builder.WriteString("conversion_rate=")
-	builder.WriteString(fmt.Sprintf("%v", _m.ConversionRate))
-	builder.WriteString(", ")
-	builder.WriteString("category_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.CategoryID))
-	builder.WriteString(", ")
 	builder.WriteString("description=")
 	builder.WriteString(_m.Description)
+	builder.WriteString(", ")
+	builder.WriteString("from=")
+	builder.WriteString(_m.From)
+	builder.WriteString(", ")
+	builder.WriteString("conversion_rate=")
+	builder.WriteString(fmt.Sprintf("%v", _m.ConversionRate))
 	builder.WriteString(", ")
 	builder.WriteString("tx_date=")
 	builder.WriteString(_m.TxDate.Format(time.ANSIC))
