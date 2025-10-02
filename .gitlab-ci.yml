@@ -7,6 +7,13 @@ variables:
 
 build:
   stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+
   before_script:
     - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
   script:
@@ -22,14 +29,19 @@ build:
 
 deploy:
   stage: deploy
-  before_script:
-    - apk add --no-cache bash  
+  image: docker/compose:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   script:
     - echo "Desplegando en VM vía runner shell"
     - docker pull "$IMAGE" || true
-    - cd /home/deploy || exit 1
-    - "sed -i 's|image: .*|image: ${IMAGE}|g' docker-compose.yml || true"
-    - docker-compose -f docker-compose.yml up -d --remove-orphans
+    - cd /deploy-dir || exit 1
+    - "sed -i 's|image: .*|image: ${IMAGE}|g' docker-compose.yaml || true"
+    - docker network create tall || true 
+    - docker-compose -f docker-compose.yaml up -d --remove-orphans
     - docker image prune -f
   only:
     - staging
