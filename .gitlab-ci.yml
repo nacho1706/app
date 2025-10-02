@@ -40,6 +40,7 @@ deploy:
     - docker pull "$IMAGE" || true
     - cd /deploy-dir || exit 1
     - "sed -i 's|image: .*|image: ${IMAGE}|g' docker-compose.yaml || true"
+    - docker network create tall || true 
     - docker-compose -f docker-compose.yaml up -d --remove-orphans
     - docker image prune -f
   only:
