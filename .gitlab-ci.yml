@@ -39,8 +39,8 @@ deploy:
     - echo "Desplegando en VM vía runner shell"
     - docker pull "$IMAGE" || true
     - cd /deploy-dir || exit 1
-    - "sed -i 's|image: .*|image: ${IMAGE}|g' docker-compose.yml || true"
-    - docker-compose -f docker-compose.yml up -d --remove-orphans
+    - "sed -i 's|image: .*|image: ${IMAGE}|g' docker-compose.yaml || true"
+    - docker-compose -f docker-compose.yaml up -d --remove-orphans
     - docker image prune -f
   only:
     - staging
